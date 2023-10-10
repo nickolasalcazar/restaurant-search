@@ -8,8 +8,8 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const API_KEY = process.env.API_KEY;
+const CLIENT_ID = process.env.YELP_CLIENT_ID;
+const API_KEY = process.env.YELP_API_KEY;
 
 // Start the server and listen on the specified port
 app.listen(port, () => {
@@ -39,7 +39,10 @@ const req = http.request(options, function (res) {
 
   res.on("end", function () {
     const body = Buffer.concat(chunks);
-    console.log(body.toString());
+    // console.log(body.toString());
+    JSON.parse(body).businesses.forEach((business) =>
+      console.log(business.name)
+    );
   });
 });
 
