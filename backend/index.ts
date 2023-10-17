@@ -1,8 +1,9 @@
 require("dotenv").config();
-const express = require("express");
+import express from "express";
+import http from "https";
+
 const app = express();
 const port = 3000;
-const http = require("https");
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");
@@ -29,21 +30,3 @@ const options = {
     Authorization: "Bearer " + API_KEY,
   },
 };
-
-const req = http.request(options, function (res) {
-  const chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    const body = Buffer.concat(chunks);
-    // console.log(body.toString());
-    JSON.parse(body).businesses.forEach((business) =>
-      console.log(business.name)
-    );
-  });
-});
-
-req.end();
