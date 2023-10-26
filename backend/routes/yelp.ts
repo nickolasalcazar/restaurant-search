@@ -1,25 +1,32 @@
 import https from "https";
-import { Router } from "express";
-import { ClientRequest } from "http";
 import dotenv from "dotenv";
+import { Router } from "express";
 
 dotenv.config();
 
 const API_KEY = process.env.YELP_API_KEY;
 const router: Router = Router();
 
-// Example: http://localhost:3000/yelp/search/geo/?name=Oakland
-router.get("/search/geo", async (req, res) => {
-  const location = req.query["location"] as string;
-  // console.log(location);
-  // const response = await searchLocations(location);
-  res.json(await searchLocations(location));
-});
-
 router.get("/", (req, res) => {
   res.json("Yelp route");
 });
 
+// Example: http://localhost:3000/yelp/search/geo/?name=Oakland
+router.get("/search/geo", async (req, res) => {
+  const location = req.query["location"] as string;
+  // console.log(location);
+  try {
+    res.json(await searchLocations(location));
+  } catch (error: any) {
+    res.sendStatus(error.statusCode);
+  }
+});
+
+/**
+ * Search locations given a location.
+ * @param location
+ * @returns
+ */
 function searchLocations(location: string): Promise<any> {
   const options = {
     method: "GET",
@@ -35,9 +42,13 @@ function searchLocations(location: string): Promise<any> {
   return new Promise((resolve, reject) => {
     https.get(options, (res) => {
       if (res.statusCode !== 200) {
-        const message = "Request failed: " + res.statusCode + res.statusMessage;
-        console.log("Request failed:", message);
-        reject(message);
+        const message =
+          "Request failed: " + res.statusCode + " " + res.statusMessage;
+        console.error(message);
+        reject({
+          message: res.statusMessage,
+          statusCode: res.statusCode,
+        });
       }
 
       let chunks: any = [];
