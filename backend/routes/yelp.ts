@@ -12,27 +12,29 @@ router.get("/", (req, res) => {
 });
 
 // Example: http://localhost:3000/yelp/search/geo/?name=Oakland
-router.get("/search/geo", async (req, res) => {
+router.get("/search", async (req, res) => {
   const location = req.query["location"] as string;
-  // console.log(location);
+  console.log(location);
   try {
     res.json(await searchLocations(location));
   } catch (error: any) {
+    console.log(error);
     res.sendStatus(error.statusCode);
   }
 });
 
 /**
  * Search locations given a location.
- * @param location
- * @returns
+ * @param {string} location
+ * @returns Promise<any>
  */
 function searchLocations(location: string): Promise<any> {
+  const encodedLocation = encodeURIComponent(location);
   const options = {
     method: "GET",
     hostname: "api.yelp.com",
     port: null,
-    path: `/v3/businesses/search?location=${location}&sort_by=best_match&limit=20`,
+    path: `/v3/businesses/search?location=${encodedLocation}&sort_by=best_match&limit=20`,
     headers: {
       accept: "application/json",
       Authorization: "Bearer " + API_KEY,
