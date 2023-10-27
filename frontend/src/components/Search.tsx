@@ -26,6 +26,9 @@ export default function Search({
       </label>
       <input
         className="form-control mb-3"
+        style={{
+          maxWidth: 500,
+        }}
         type="text"
         id="restaurantSearch"
         aria-label="Search for restaurants"

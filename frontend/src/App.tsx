@@ -22,7 +22,9 @@ export default function App() {
 
   return (
     <>
-      <h1>Restaurant Search</h1>
+      <div className="container mt-3">
+        <h1>Restaurant Search</h1>
+      </div>
       <Search
         handleSubmit={handleSubmit}
         queryString={queryString}
