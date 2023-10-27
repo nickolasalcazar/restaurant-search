@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   res.json("Yelp route");
 });
 
-// Example: http://localhost:3000/yelp/search/geo/?name=Oakland
+// Example: http://localhost:3000/yelp/search/?locationURI=Oakland
 router.get("/search", async (req, res) => {
   const location = req.query["location"] as string;
   console.log(location);
