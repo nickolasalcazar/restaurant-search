@@ -1,6 +1,7 @@
-import { useState, FormEvent, useEffect } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import "./App.css";
 import { searchRestaurants } from "./services/backend";
+import Search from "./components/Search";
 
 export default function App() {
   const [queryString, setQueryString] = useState("");
@@ -20,38 +21,18 @@ export default function App() {
   return (
     <>
       <h1>Restaurant Search</h1>
-      <form
-        role="search"
-        action="/search"
-        method="get"
-        onSubmit={(event: FormEvent): void => {
-          handleSubmit(event);
-        }}
-      >
-        <label htmlFor="restaurantSearch">Search for Restaurants:</label>
-        <input
-          type="text"
-          id="restaurantSearch"
-          name="q"
-          aria-label="Search for Restaurants"
-          aria-autocomplete="both"
-          autoComplete="off"
-          placeholder="Type the name of a restaurant"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-            setQueryString(e.target.value)
-          }
-        ></input>
-        <button type="submit" value={queryString}>
-          Search
-        </button>
-        <div>
-          {businesses
-            ? businesses.map((business) => (
-                <h2 key={business.id}>{business.name}</h2>
-              ))
-            : null}
-        </div>
-      </form>
+      <Search
+        handleSubmit={handleSubmit}
+        queryString={queryString}
+        setQueryString={setQueryString}
+      />
+      <div>
+        {businesses
+          ? businesses.map((business) => (
+              <h2 key={business.id}>{business.name}</h2>
+            ))
+          : null}
+      </div>
     </>
   );
 }
