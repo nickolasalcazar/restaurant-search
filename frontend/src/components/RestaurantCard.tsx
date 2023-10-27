@@ -9,13 +9,12 @@ interface CardProps {
   business: Business;
 }
 
-export default function RestaurantCard({ business }: CardProps) {
+export default function RestaurantCard({ business }: CardProps): JSX.Element {
   return (
-    <div key={business.id} className="card" style={{ width: 300 }}>
+    <div className="card" style={{ height: "100%" }}>
       <img
         className="card-img-top"
         style={{
-          width: 300,
           height: 200,
           objectFit: "cover",
         }}

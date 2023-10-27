@@ -28,9 +28,22 @@ export default function App() {
         queryString={queryString}
         setQueryString={setQueryString}
       />
-      <div className="container">
+      <div
+        className="container my-3"
+        style={{
+          flexWrap: "wrap",
+          gap: 30,
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+          gridGap: 10,
+        }}
+      >
         {businesses
-          ? businesses.map((business) => <RestaurantCard business={business} />)
+          ? businesses.map((business) => (
+              <div key={business.id}>
+                <RestaurantCard business={business} />
+              </div>
+            ))
           : null}
       </div>
     </>
