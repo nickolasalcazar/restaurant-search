@@ -12,32 +12,33 @@ export default function Search({
   setQueryString,
 }: SearchParams) {
   return (
-    <div>
-      <form
-        role="search"
-        action="/search"
-        method="get"
-        onSubmit={(event: FormEvent): void => {
-          handleSubmit(event);
-        }}
-      >
-        <label htmlFor="restaurantSearch">Search for Restaurants:</label>
-        <input
-          type="text"
-          id="restaurantSearch"
-          name="q"
-          aria-label="Search for Restaurants"
-          aria-autocomplete="both"
-          autoComplete="off"
-          placeholder="Type the name of a restaurant"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-            setQueryString(e.target.value)
-          }
-        ></input>
-        <button type="submit" value={queryString}>
-          Search
-        </button>
-      </form>
-    </div>
+    <form
+      className="container"
+      role="search"
+      action="/search"
+      method="get"
+      onSubmit={(event: FormEvent): void => {
+        handleSubmit(event);
+      }}
+    >
+      <label className="form-label mb-3" htmlFor="restaurantSearch">
+        Search for Restaurants:
+      </label>
+      <input
+        className="form-control mb-3"
+        type="text"
+        id="restaurantSearch"
+        aria-label="Search for restaurants"
+        aria-autocomplete="both"
+        autoComplete="off"
+        placeholder="Search for restaurant"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+          setQueryString(e.target.value)
+        }
+      ></input>
+      <button type="submit" value={queryString} className="btn btn-primary">
+        Search
+      </button>
+    </form>
   );
 }

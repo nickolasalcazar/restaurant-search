@@ -1,5 +1,7 @@
 import { FormEvent, useState, useEffect } from "react";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import { searchRestaurants } from "./services/backend";
 import Search from "./components/Search";
 
@@ -26,10 +28,30 @@ export default function App() {
         queryString={queryString}
         setQueryString={setQueryString}
       />
-      <div>
+      <div className="container">
         {businesses
           ? businesses.map((business) => (
-              <h2 key={business.id}>{business.name}</h2>
+              <div key={business.id} className="card" style={{ width: 300 }}>
+                <img
+                  className="card-img-top"
+                  style={{
+                    width: 300,
+                    height: 200,
+                    objectFit: "cover",
+                  }}
+                  src={business.image_url}
+                  role="img"
+                  aria-label={"Photo of " + business.name}
+                />
+                <div className="card-body">
+                  <h2>{business.name}</h2>
+                  {business.categories.map((category: any, i: number) => (
+                    <p className="card-text" key={`${i}-${business.id}`}>
+                      {category.title}
+                    </p>
+                  ))}
+                </div>
+              </div>
             ))
           : null}
       </div>
